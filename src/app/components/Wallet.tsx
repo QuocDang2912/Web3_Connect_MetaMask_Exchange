@@ -11,8 +11,6 @@ export default function Wallet() {
     connect() 
   }
   
-
-
   useEffect(() => {
     if(address){
         getBalance()
@@ -40,7 +38,7 @@ export default function Wallet() {
           {/* <h2> Số dư: {balance}</h2> */}
         </div>
       </div>
-      <Interactions contract={contract} />
+      <Interactions getBalance={getBalance} contract={contract} />
     </div>
   );
 }
