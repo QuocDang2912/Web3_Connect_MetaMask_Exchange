@@ -1,45 +1,59 @@
 "use client";
 
-import React, { useState,useEffect } from "react";
+import { ethers } from "ethers";
+import React, { useEffect, useState } from "react";
+import UseEther from "../hooks/UseEther";
+const Interactions = (props: any) => {
+  const { connect } = UseEther();
 
-import {ethers} from 'ethers'
+  const [transferHash, setTransferHash] = useState(null);
 
+  const transferHandler = async (e: any) => {
+    e.preventDefault();
+    try {
+      let transferAmount = e.target.sendAmount.value;
+      let recieverAddress = e.target.recieverAddress.value;
+      console.log("🚀 ~ transferHandler ~ recieverAddress:", recieverAddress)
+      console.log("🚀 ~ transferHandler ~ transferAmount:", transferAmount);
+      let txt = await props.contract.transfer(recieverAddress, transferAmount);
+      console.log("🚀 ~ transferHandler ~ txt:", txt)
 
-const Interactions = (props:any) => {
+      setTransferHash(txt.hash);  // text.hash là giá trị của hàm băm 
+    } catch (error:any) {
+      console.log("🚀 ~ transferHandler ~ error:", error)
+      if(error.code=="-32603"){
+        alert("Số tiền của bạn không đủ để thực hiện giao dịch");
+      }else{
+        alert("Giao dịch thất bại");
+      }
+    }
+  };
 
-	const [transferHash, setTransferHash] = useState(null);
+  return (
+    <div className="interactionsCard">
+      <form onSubmit={transferHandler}>
+        <h3 className="text-lg italic font-black text-orange-300">
+          {" "}
+          Giao dịch{" "}
+        </h3>
+        <p className="text-lg italic font-bold">Địa chỉ ví muốn gửi tiền </p>
+        <input
+          className="addressInput mb-2"
+          type="text"
+          id="recieverAddress"
+          required
+        />
 
-	const transferHandler = async (e:any) => {
-        e.preventDefault();
-        try {
-            let transferAmount = e.target.sendAmount.value;
-            let recieverAddress = e.target.recieverAddress.value;
-    
-            let txt = await props.contract.transfer(recieverAddress, transferAmount);
-            console.log("🚀 ~ transferHandler ~ txt:", txt)
-            setTransferHash(txt.hash);
-        } catch (error) {
-           alert("địa chỉ Ip không tồn tại")
-        }
-	}
-	
-return (
-			<div >
-				<form onSubmit={transferHandler}>
-					<h3> Transfer Coins </h3>
-						<p>Địa chỉ account muốn gửi </p>
-						<input type='text' id='recieverAddress' required/>
+        <p className="text-lg italic font-bold"> Số tiền gửi </p>
+        <input type="number" id="sendAmount" min="0" step="1" required />
 
-						<p> số tiền gửi </p>
-						<input type='number' id='sendAmount' min='0' step='1' required/>
-
-						<button type='submit'>Gửi</button>
-						<div>
-							{transferHash}
-						</div>
-			</form>
-			</div>
-		)
-}
+        <button className="button6" type="submit">
+          Gửi
+        </button>
+        <div>{transferHash}</div>
+      </form>
+    </div>
+  );
+};
 
 export default Interactions;

@@ -1,45 +1,47 @@
-"use client";
-declare const window: any;
-import { ethers } from "ethers";
-import React, { useState } from "react";
-import simple_token_abi from "../contracts/token_api.json";
+  "use client";
+  declare const window: any;
+  import { ethers } from "ethers";
+  import React, { useState } from "react";
+  import simple_token_abi from "../contracts/token_api.json"; // ABI định nghĩa các hàm và sự kiện trong hợp đồng thông minh
 
-export default function UseEther() {
-  const [address, setAddress] = useState<string>("");
-  const [balance, setBalance] = useState(0);
-  const [signer, setSigner] = useState();
-  const [contract, setContract] = useState<ethers.Contract | null>(null);
-  const contractAddress = '0xC141334a57DDd61Dda76A0dA32fe750E7Cb7f81B';
+  export default function UseEther() {
+    const [address, setAddress] = useState<string>("");
+    const [balance, setBalance] = useState("0");
+    const [signer, setSigner] = useState<ethers.Signer | null>(null);
+    const [contract, setContract] = useState<ethers.Contract | null>(null);
 
-  const getBalance = async () => {
-    const balance = await signer.getBalance();
-    console.log("🚀 ~ getBalance ~ balance:", balance)
-    console.log("🚀 ~ getBalance ~ balance:", balance.toString())
-    setBalance(balance);
-  };
-  const connect = async () => {
-    if (window.ethereum) {
-      const provider = new ethers.providers.Web3Provider(
-        window.ethereum,
-        "any"
-      );
-      await provider.send("eth_requestAccounts", []);
-      const signer = provider.getSigner();
-      setSigner(signer)
-      const address = await signer.getAddress();
-      setAddress(address);
+    const contractAddress = '0xad9B73B6dCac3125D20e544E483f91d40efaf715';
+    // là địa chỉ của hợp đồng thông minh (Đó là địa chỉ cố định trên blockchain.), nơi chứa logic để thực hiện các giao dịch token. (cho phép bạn gọi các hàm của hợp đồng, chẳng hạn như chuyển tiền, kiểm tra số dư, v.v.)
 
-      let tempSigner = provider.getSigner();
+    const getBalance = async () => {
+      const balance = await signer.getBalance();
+      setBalance(balance.toString());
+    };
+    const connect = async () => {
+      if (window.ethereum) {
+        const provider = new ethers.providers.Web3Provider(
+          window.ethereum,
+          "any"
+        );
+        await provider.send("eth_requestAccounts", []);
+        const signer = provider.getSigner();
+        setSigner(signer)
+        const address = await signer.getAddress();
+        setAddress(address);
 
-      let tempContract = new ethers.Contract(contractAddress, simple_token_abi, tempSigner)
-      setContract(tempContract);
-    }
-  };
-  return {
-    connect,
-    address,
-    balance,
-    getBalance,
-    contract
-  };
-}
+        let tempSigner = provider.getSigner();
+
+        let tempContract = new ethers.Contract(contractAddress, simple_token_abi, tempSigner)
+        setContract(tempContract);
+      }else{
+        alert("Vui lòng cài đặt ví MetaMask trước khi liên kết")
+      }
+    };
+    return {
+      connect,
+      address,
+      balance,
+      getBalance,
+      contract
+    };
+  }

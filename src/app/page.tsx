@@ -3,7 +3,7 @@ import Wallet from "./components/Wallet";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center  p-24 ">
+    <main className=" min-h-screen  p-24 text-center ">
        <Wallet/>
     </main>
   );
