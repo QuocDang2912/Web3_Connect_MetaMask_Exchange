@@ -24,9 +24,6 @@ const Interactions = (props: any) => {
       let tx = await props.contract.transfer(recieverAddress, transferAmount);
       console.log("Giao dịch đã gửi:", tx);
 
-      // Chờ cho giao dịch được xác nhận trên blockchain
-      await tx.wait();
-
       setTransferHash(tx.hash); // text.hash là giá trị của hàm băm
       alert("Giao dịch thành công!");
 

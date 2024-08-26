@@ -14,11 +14,10 @@
     // là địa chỉ của hợp đồng thông minh (Đó là địa chỉ cố định trên blockchain.), nơi chứa logic để thực hiện các giao dịch token. (cho phép bạn gọi các hàm của hợp đồng, chẳng hạn như chuyển tiền, kiểm tra số dư, v.v.)
 
     const getBalance = async () => {
-      if (signer) {  // Kiểm tra nếu signer không phải là null
+      if (signer) {
         const balance = await signer.getBalance(); // lấy ra số dư
         setBalance(balance.toString());
       } else {
-        console.error("Signer is null, please connect to a wallet first");
         alert("Vui lòng kết nối ví trước khi lấy số dư!");
       }
     };
@@ -29,7 +28,7 @@
           "any"
         ); //  giúp kết nối ứng dụng của bạn với mạng blockchain thông qua một nhà cung cấp Web3. any : có thể sử dụng bất kỳ mạng nào
         await provider.send("eth_requestAccounts", []); // gửi yêu cầu truy cập tk  
-        const signer = provider.getSigner(); // lấy được đối tượng Signer đại diện cho tài khoản mà người dùng đã chọn trong MetaMask.
+        const signer = provider.getSigner(); // lấy được tk mà người dùng đã chọn trong MetaMask.
         setSigner(signer)
         const address = await signer.getAddress(); // lấy địa chỉ
         setAddress(address);
