@@ -14,7 +14,7 @@ export default function Wallet() {
   useEffect(() => {
     if(address){
         getBalance()
-        // connect()   
+        // connect()
     }
   }, [address]);
   return (

@@ -1,7 +1,7 @@
 "use client";
 
 import { ethers } from "ethers";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 const Interactions = (props: any) => {
   const [transferHash, setTransferHash] = useState(null);
   const [isLoading, setIsLoading] = useState(false);  // Thêm state isLoading
@@ -44,9 +44,6 @@ const Interactions = (props: any) => {
     }
   };
 
-
-
-
   return (
     <div className="interactionsCard">
       <form onSubmit={transferHandler}>
@@ -54,7 +51,7 @@ const Interactions = (props: any) => {
           {" "}
           Giao dịch{" "}
         </h3>
-        <p className="text-lg italic font-bold">Địa chỉ ví muốn gửi tiền </p>
+        <p className="text-lg italic font-bold">Địa chỉ ví muốn gửi Token </p>
         <input
           className="addressInput mb-2"
           type="text"
@@ -62,7 +59,7 @@ const Interactions = (props: any) => {
           required
         />
 
-        <p className="text-lg italic font-bold"> Số tiền gửi </p>
+        <p className="text-lg italic font-bold"> Số Token gửi </p>
         <input type="number" id="sendAmount" min="0" step="1" required />
 
         <button className="button6" type="submit" disabled={isLoading}>

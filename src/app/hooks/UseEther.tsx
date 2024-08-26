@@ -10,11 +10,11 @@
     const [signer, setSigner] = useState<ethers.Signer | null>(null);
     const [contract, setContract] = useState<ethers.Contract | null>(null);
 
-    const contractAddress = '0xb7B8285363Ae8f755f9db674a6D528d8715863Ae';
+    const contractAddress = '0x760373A879713004F2A066Eac023dBA824B4A321';
     // là địa chỉ của hợp đồng thông minh (Đó là địa chỉ cố định trên blockchain.), nơi chứa logic để thực hiện các giao dịch token. (cho phép bạn gọi các hàm của hợp đồng, chẳng hạn như chuyển tiền, kiểm tra số dư, v.v.)
 
     const getBalance = async () => {
-      const balance = await signer.getBalance();
+      const balance = await signer.getBalance(); // lấy ra số dư
       setBalance(balance.toString());
     };
     const connect = async () => {
@@ -22,16 +22,16 @@
         const provider = new ethers.providers.Web3Provider(
           window.ethereum,
           "any"
-        );
-        await provider.send("eth_requestAccounts", []);
-        const signer = provider.getSigner();
+        ); //  giúp kết nối ứng dụng của bạn với mạng blockchain thông qua một nhà cung cấp Web3. any : có thể sử dụng bất kỳ mạng nào
+        await provider.send("eth_requestAccounts", []); // gửi yêu cầu truy cập tk  
+        const signer = provider.getSigner(); // lấy được đối tượng Signer đại diện cho tài khoản mà người dùng đã chọn trong MetaMask.
         setSigner(signer)
-        const address = await signer.getAddress();
+        const address = await signer.getAddress(); // lấy địa chỉ
         setAddress(address);
 
         let tempSigner = provider.getSigner();
 
-        let tempContract = new ethers.Contract(contractAddress, simple_token_abi, tempSigner)
+        let tempContract = new ethers.Contract(contractAddress, simple_token_abi, tempSigner) // Khởi tạo hợp đồng thông minh (contract)
         setContract(tempContract);
       }else{
         alert("Vui lòng cài đặt ví MetaMask trước khi liên kết")
