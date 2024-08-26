@@ -4,7 +4,7 @@ import { ethers } from "ethers";
 import React, { useState } from "react";
 const Interactions = (props: any) => {
   const [transferHash, setTransferHash] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);  // Thêm state isLoading
+  const [isLoading, setIsLoading] = useState(false);
 
   const transferHandler = async (e: any) => {
     e.preventDefault();
