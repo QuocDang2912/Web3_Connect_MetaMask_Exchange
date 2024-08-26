@@ -14,8 +14,13 @@
     // là địa chỉ của hợp đồng thông minh (Đó là địa chỉ cố định trên blockchain.), nơi chứa logic để thực hiện các giao dịch token. (cho phép bạn gọi các hàm của hợp đồng, chẳng hạn như chuyển tiền, kiểm tra số dư, v.v.)
 
     const getBalance = async () => {
-      const balance = await signer.getBalance(); // lấy ra số dư
-      setBalance(balance.toString());
+      if (signer) {  // Kiểm tra nếu signer không phải là null
+        const balance = await signer.getBalance(); // lấy ra số dư
+        setBalance(balance.toString());
+      } else {
+        console.error("Signer is null, please connect to a wallet first");
+        alert("Vui lòng kết nối ví trước khi lấy số dư!");
+      }
     };
     const connect = async () => {
       if (window.ethereum) {
