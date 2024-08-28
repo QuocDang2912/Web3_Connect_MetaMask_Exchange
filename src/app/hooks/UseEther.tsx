@@ -10,7 +10,7 @@
     const [signer, setSigner] = useState<ethers.Signer | null>(null);
     const [contract, setContract] = useState<ethers.Contract | null>(null);
 
-    const contractAddress = '0x73579d4255bD670A77784CDc567A7Cf317FD1e91';
+    const contractAddress = '0x86F4259154ff8478E76c53Fe9673060b81BFB0a1';
     // là địa chỉ của hợp đồng thông minh (Đó là địa chỉ cố định trên blockchain.), nơi chứa logic để thực hiện các giao dịch token. (cho phép  gọi các hàm của hợp đồng, chẳng hạn như chuyển tiền, kiểm tra số dư, v.v.)
 
     const getBalance = async () => {
@@ -32,7 +32,6 @@
         setSigner(signer)
         const address = await signer.getAddress(); // lấy địa chỉ
         setAddress(address);
-
         let tempSigner = provider.getSigner();
 
         let tempContract = new ethers.Contract(contractAddress, simple_token_abi, tempSigner) // Khởi tạo hợp đồng thông minh (contract)

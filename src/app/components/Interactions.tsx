@@ -2,17 +2,25 @@
 
 import { ethers } from "ethers";
 import React, { useState } from "react";
+interface TransferFormElements extends HTMLFormControlsCollection {
+  sendAmount: HTMLInputElement;
+  recieverAddress: HTMLInputElement;
+}
+
+interface TransferForm extends HTMLFormElement {
+  elements: TransferFormElements;
+}
 const Interactions = (props: any) => {
   const [transferHash, setTransferHash] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const transferHandler = async (e: any) => {
+  const transferHandler = async (e: React.FormEvent<TransferForm>) => {
     e.preventDefault();
     setIsLoading(true);  
 
     try {
-      let transferAmount = e.target.sendAmount.value;
-      let recieverAddress = e.target.recieverAddress.value;
+      const transferAmount = e.currentTarget.elements.sendAmount.value;
+      const recieverAddress = e.currentTarget.elements.recieverAddress.value;
 
       // Kiểm tra địa chỉ ví
       if (!ethers.utils.isAddress(recieverAddress)) {
