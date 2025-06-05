@@ -12,7 +12,7 @@
 
     const contractAddress = '0xef54cc89b7a27b83abd53c6a1b016d2cef8237d6';
     // là địa chỉ của hợp đồng thông minh (Đó là địa chỉ cố định trên blockchain.), nơi chứa logic để thực hiện các giao dịch token. (cho phép  gọi các hàm của hợp đồng, chẳng hạn như chuyển tiền, kiểm tra số dư, v.v.)
-// fff
+   // fff  cmccmm
     const getBalance = async () => {
       if (signer) {
         const balance = await signer.getBalance(); // lấy ra số dư
