@@ -16,7 +16,7 @@ const Interactions = (props: any) => {
 
   const transferHandler = async (e: React.FormEvent<TransferForm>) => {
     e.preventDefault();
-    setIsLoading(true);  
+    setIsLoading(true); 
 
     try {
       const transferAmount = e.currentTarget.elements.sendAmount.value;
@@ -63,12 +63,10 @@ const Interactions = (props: any) => {
           id="recieverAddress"
           required
         />
-
         <p className="text-lg italic font-bold"> Số Token gửi </p>
-        <input type="number" id="sendAmount" min="0" step="1" required />
-
-        <button className="button6" type="submit" disabled={isLoading}>
-          {isLoading ? "Đang xử lý..." : "Gửi"}  
+        <input  className="moneyInput mb-2" type="number" id="sendAmount" min="0" step="1" required />
+        <button className="button7" type="submit" disabled={isLoading}>
+          {isLoading ? "Đang xử lý..." : "Gửi token"}  
         </button>
         <div>{transferHash}</div>
       </form>
